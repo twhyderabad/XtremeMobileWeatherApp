@@ -14,6 +14,7 @@ import com.twevent.xtrememobileweatherapp.model.Weather;
 import com.twevent.xtrememobileweatherapp.model.WeatherForecast;
 import com.twevent.xtrememobileweatherapp.model.WeatherForecastResponse;
 import com.twevent.xtrememobileweatherapp.presenter.WeatherPresenter;
+import com.twevent.xtrememobileweatherapp.tasks.AsyncWeatherForecastTask;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +23,7 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  WeatherResponseListener{
 
     private Weather currentWeather = null;
     private Map<String, Integer> weatherStatusImageMap = new HashMap<>();
@@ -76,12 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showForecastDetails(View view) {
-        readForecastDataFromFile();
-        Intent intent = new Intent(this, DetailWeatherActivity.class);
-        Gson gson = new Gson();
-        String weatherData = gson.toJson(weatherForecast, WeatherForecastResponse.class);
-        intent.putExtra("weatherData", weatherData);
-        startActivity(intent);
+        fetchForecastData();
     }
 
     private void readForecastDataFromFile(){
@@ -95,5 +91,23 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void fetchForecastData(){
+        String weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + currentWeather.getName() + "&units=metric" + "&" + "APPID=" + "ebbc66b823072502c81339f5b0b9b042";
+        AsyncWeatherForecastTask task = new AsyncWeatherForecastTask(this);
+        task.execute(weatherUrl);
+    }
+
+    @Override
+    public void weatherForecastReceived(String data) {
+        Intent intent = new Intent(this, DetailWeatherActivity.class);
+        intent.putExtra("weatherData", data);
+        startActivity(intent);
+    }
+
+    @Override
+    public void weatherForecastFailed() {
+
     }
 }
