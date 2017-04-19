@@ -18,5 +18,7 @@
         </activity>
         <activity android:name=".DetailWeatherActivity" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
 </manifest>
