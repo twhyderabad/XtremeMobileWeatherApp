@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">XtremeMobileWeatherApp</string>
+    <string name="app_name">WeatherApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="api_key">ebbc66b823072502c81339f5b0b9b042</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="upArrow">↑</string>
+    <string name="downArrow">↓</string>
+    <string name="quote">Enjoy the clouds, awaits for splashes</string>
+    <string name="favourite">Favourite</string>
+    <string name="forecast">Forecast</string>
+    <string name="hyderabad">Hyderabad</string>
+    <string name="cloudy">cloudy</string>
+    <string name="_23c">23C</string>
+    <string name="weather_image">weather image</string>
+    <string name="add_as_favourite"> <u>Add as favourite</u></string>
+
 </resources>
