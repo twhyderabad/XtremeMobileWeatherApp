@@ -1,9 +1,11 @@
 package com.twevent.xtrememobileweatherapp;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,5 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView weatherImage = (ImageView) findViewById(R.id.weatherImage);
         weatherImage.setImageResource(weatherStatusImageMap.get(currentWeather.getWeather().get(0).getDescription()));
+    }
+
+    public void showForecastDetails(View view) {
+        Intent intent = new Intent(this, DetailWeatherActivity.class);
+        startActivity(intent);
     }
 }
