@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.twevent.xtrememobileweatherapp.model.Weather;
+import com.twevent.xtrememobileweatherapp.model.WeatherForecast;
+import com.twevent.xtrememobileweatherapp.model.WeatherForecastResponse;
 import com.twevent.xtrememobileweatherapp.presenter.WeatherPresenter;
 
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Weather currentWeather = null;
     private Map<String, Integer> weatherStatusImageMap = new HashMap<>();
-
+    private WeatherForecastResponse weatherForecast = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showForecastDetails(View view) {
+        readForecastDataFromFile();
         Intent intent = new Intent(this, DetailWeatherActivity.class);
+        Gson gson = new Gson();
+        String weatherData = gson.toJson(weatherForecast, WeatherForecastResponse.class);
+        intent.putExtra("weatherData", weatherData);
         startActivity(intent);
+    }
+
+    private void readForecastDataFromFile(){
+        AssetManager assetManager = getAssets();
+        try {
+            InputStream inputStream = assetManager.open("city_forecast.json");
+            Gson gson = new Gson();
+            Reader inputReader = new InputStreamReader(inputStream);
+            weatherForecast = gson.fromJson(inputReader, WeatherForecastResponse.class);
+            renderWeather();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="@dimen/smallPadding" >
+
+
+    <TextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textStyle="normal"
+            android:textSize="17dp"
+            android:fontFamily="monospace"
+            android:typeface="normal"
+            android:text="Monday"
+    />
+
+    <ImageView
+        android:id="@+id/weatherimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/day"
+        android:paddingLeft="@dimen/smallPadding"
+        />
+
+
+    <TextView
+            android:id="@+id/temperature_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textSize="15sp"
+            android:layout_toRightOf="@id/weatherimg"
+            android:paddingLeft="@dimen/smallPadding"
+            android:typeface="normal" />
+
+    <TextView
+            android:id="@+id/temperature_max_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textSize="17sp"
+            android:layout_toRightOf="@id/temperature_max"
+            android:typeface="normal"
+            android:layout_alignBaseline="@+id/temperature_max"
+            android:text="@string/upArrow"
+    />
+
+    <TextView
+            android:id="@+id/temperature_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/temperature_max_arrow"
+            android:ellipsize="marquee"
+            android:paddingLeft="@dimen/smallPadding"
+            android:textSize="15sp"
+            android:typeface="normal" />
+
+    <TextView
+            android:id="@+id/temperature_min_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textSize="17sp"
+            android:layout_toRightOf="@id/temperature_min"
+            android:layout_alignBaseline="@+id/temperature_min"
+            android:text="@string/downArrow"
+            android:layout_alignParentRight="true"
+    />
+
+</RelativeLayout>
