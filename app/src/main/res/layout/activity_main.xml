@@ -88,6 +88,7 @@
             android:layout_marginLeft="@dimen/smallPadding"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/quote"
+            android:onClick="showForecastDetails"
             />
 
         <TextView
