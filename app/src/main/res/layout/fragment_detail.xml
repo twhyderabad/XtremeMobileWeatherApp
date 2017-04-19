@@ -7,11 +7,30 @@
              >
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/city"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:fontFamily="sans-serif"
         android:gravity="start"
-        android:text="Welcome to Fragment"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        />
+
+    <TextView
+        android:id="@+id/dateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="right"
+        android:fontFamily="sans-serif"
+        />
+
+    <ListView
+        android:id="@+id/weather_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        >
+    </ListView>
+
+
 
 </RelativeLayout>
