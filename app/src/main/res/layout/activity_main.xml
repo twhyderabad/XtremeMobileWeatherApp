@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,18 +8,98 @@
     tools:context="com.twevent.xtrememobileweatherapp.MainActivity">
 
 
-    <include
-        layout="@layout/custom_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:background="@drawable/gradient"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:context="com.example.rajashrk.weatherapp.MainActivity"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/cityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cityName"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text=""
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <ImageView android:id="@+id/weatherImage"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/date"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/weather_image"
+            android:layout_centerHorizontal="true"/>
+
+
+        <TextView
+            android:id="@+id/weatherDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weatherImage"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="10dp"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weatherDescription"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="20dp"
+            android:text="@string/_23c"
+            android:textSize="60sp"
+            android:textStyle="normal" />
+
+
+        <TextView
+            android:id="@+id/quote"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_below="@+id/temperature"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="40dp"
+            android:text="@string/quote"
+            android:textSize="17sp"
+            android:textStyle="italic" />
+
+        <Button android:id="@+id/forecastButton"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:text="Forecast"
+            android:background="@color/pink"
+            android:layout_marginLeft="@dimen/smallPadding"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/quote"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/add_as_favourite"
+            android:id="@+id/addAsFavourite"
+            android:layout_below="@+id/forecastButton"
+            android:paddingTop="40dp"
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
