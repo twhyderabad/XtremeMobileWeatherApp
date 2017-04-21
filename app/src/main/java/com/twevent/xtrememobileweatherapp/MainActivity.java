@@ -27,6 +27,9 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class MainActivity extends AppCompatActivity implements WeatherForecastResponseListener, CurrentWeatherResponseListener {
 
     private static final int SEARCH_CODE = 9999;
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
         weatherStatusImageMap.put("haze", R.drawable.cloud);
     }
 
+	private SharedPreferences sharedPreferences;
+    private ImageView favouriteListButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,21 +58,32 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
         setSupportActionBar(toolbar);
         loadWeatherFromFile();
 
-        ImageView searchImageView = (ImageView) findViewById(R.id.searchImageView);
-        searchImageView.setOnClickListener(new View.OnClickListener() {
+		ImageView searchImageView = (ImageView) findViewById(R.id.searchImageView);
+		searchImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchSearchActivity();
             }
         });
 
-        TextView saveAsFavourite = (TextView) findViewById(R.id.add_as_favourite);
-        saveAsFavourite.setOnClickListener(new View.OnClickListener() {
+		sharedPreferences = getSharedPreferences("com.twevent.xtrememobileweatherapp.weatherApp", 0);
+
+        favouriteListButton = (ImageView) findViewById(R.id.view_favourite_list);
+        showFavouriteListButton();
+
+        TextView saveAsFavouriteButton = (TextView) findViewById(R.id.add_as_favourite);
+        saveAsFavouriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveFavourite();
+                showFavouriteListButton();
             }
         });
+    }
+
+    private void showFavouriteListButton() {
+        int favListButtonVisibility = sharedPreferences.getBoolean("favouriteSaved", false) ? VISIBLE : INVISIBLE;
+        favouriteListButton.setVisibility(favListButtonVisibility);
     }
 
     private void loadWeatherFromFile() {
@@ -123,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
     }
 
     private void saveFavourite() {
-        SharedPreferences sharedPreferences = getSharedPreferences("com.twevent.xtrememobileweatherapp.weatherApp", 0);
         sharedPreferences.edit().putBoolean("favouriteSaved", true).apply();
     }
 

@@ -11,5 +11,6 @@
     <string name="click_to_search">Click to search</string>
     <string name="enter_city_name_and_click_to_search">Enter city name and click to search</string>
     <string name="search_city">Search City</string>
-    <string name="add_as_favourite">Add as favourite</string>
+    <string name="add_as_favourite"><u> Add as favourite </u></string>
+    <string name="view_favourite_list">View favourite list</string>
 </resources>
