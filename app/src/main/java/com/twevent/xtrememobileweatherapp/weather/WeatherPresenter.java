@@ -1,7 +1,5 @@
-package com.twevent.xtrememobileweatherapp.presenter;
+package com.twevent.xtrememobileweatherapp.weather;
 
-
-import com.twevent.xtrememobileweatherapp.model.Weather;
 
 import java.util.Arrays;
 import java.util.Calendar;

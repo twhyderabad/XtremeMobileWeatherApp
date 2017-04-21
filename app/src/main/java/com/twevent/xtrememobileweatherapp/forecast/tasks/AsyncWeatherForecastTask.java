@@ -1,7 +1,7 @@
-package com.twevent.xtrememobileweatherapp.tasks;
+package com.twevent.xtrememobileweatherapp.forecast.tasks;
 
 import android.os.AsyncTask;
-import com.twevent.xtrememobileweatherapp.WeatherResponseListener;
+import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastResponseListener;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,9 +13,9 @@ import java.io.IOException;
 public class AsyncWeatherForecastTask extends AsyncTask<String, Void, String> {
 
 	private static final String FAILED_EVENT = "FailedEvent";
-	private WeatherResponseListener listener;
+	private final WeatherForecastResponseListener listener;
 
-	public AsyncWeatherForecastTask(WeatherResponseListener listener) {
+	public AsyncWeatherForecastTask(WeatherForecastResponseListener listener) {
 		super();
 		this.listener = listener;
 	}

@@ -1,4 +1,4 @@
-package com.twevent.xtrememobileweatherapp.model;
+package com.twevent.xtrememobileweatherapp.weather;
 
 import java.util.List;
 

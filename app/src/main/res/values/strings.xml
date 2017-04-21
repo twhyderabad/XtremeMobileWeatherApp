@@ -8,4 +8,7 @@
     <string name="forecast">Forecast</string>
     <string name="_23c">23C</string>
     <string name="weather_image">Weather image</string>
+    <string name="click_to_search">Click to search</string>
+    <string name="enter_city_name_and_click_to_search">Enter city name and click to search</string>
+    <string name="search_city">Search City</string>
 </resources>
