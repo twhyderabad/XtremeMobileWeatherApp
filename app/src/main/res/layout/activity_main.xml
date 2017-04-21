@@ -91,4 +91,14 @@
     android:layout_below="@+id/quote"
     android:onClick="showForecastDetails"/>
 
+  <TextView
+    android:id="@+id/add_as_favourite"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/forecastButton"
+    android:layout_centerHorizontal="true"
+    android:paddingTop="40dp"
+    android:text="@string/add_as_favourite"
+    android:textSize="17sp" />
+
 </RelativeLayout>

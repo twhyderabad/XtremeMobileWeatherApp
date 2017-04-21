@@ -1,6 +1,7 @@
 package com.twevent.xtrememobileweatherapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -51,11 +52,19 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
         setSupportActionBar(toolbar);
         loadWeatherFromFile();
 
-        View searchImageView = findViewById(R.id.searchImageView);
+        ImageView searchImageView = (ImageView) findViewById(R.id.searchImageView);
         searchImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchSearchActivity();
+            }
+        });
+
+        TextView saveAsFavourite = (TextView) findViewById(R.id.add_as_favourite);
+        saveAsFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveFavourite();
             }
         });
     }
@@ -71,6 +80,67 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showForecastDetails(View view) {
+        fetchForecastData();
+    }
+
+    @Override
+    public void weatherForecastReceived(String data) {
+        Intent intent = new Intent(this, WeatherForecastActivity.class);
+        intent.putExtra("weatherData", data);
+        intent.putExtra("city", currentWeather.getName());
+        startActivity(intent);
+    }
+
+    @Override
+    public void weatherForecastFailed() {
+        Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SEARCH_CODE && resultCode == RESULT_OK) {
+            double latitude = data.getDoubleExtra("latitude", -1);
+            double longitude = data.getDoubleExtra("longitude", -1);
+            if (latitude != -1 && longitude != -1) {
+                fetchWeatherForLocation(latitude, longitude);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onCurrentWeatherFetched(Weather weather) {
+        currentWeather = weather;
+        renderWeatherList();
+    }
+
+    @Override
+    public void onCurrentWeatherFetchFailure() {
+        Toast.makeText(MainActivity.this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
+    }
+
+    private void saveFavourite() {
+        SharedPreferences sharedPreferences = getSharedPreferences("com.twevent.xtrememobileweatherapp.weatherApp", 0);
+        sharedPreferences.edit().putBoolean("favouriteSaved", true).apply();
+    }
+
+    private void fetchWeatherForLocation(double latitude, double longitude) {
+        AsyncCurrentWeatherTask task = new AsyncCurrentWeatherTask(this);
+        task.execute(latitude, longitude);
+    }
+
+    private void launchSearchActivity() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivityForResult(intent, SEARCH_CODE);
+    }
+
+    private void fetchForecastData(){
+        String weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + currentWeather.getName() + "&units=metric" + "&" + "APPID=" + "ebbc66b823072502c81339f5b0b9b042";
+        AsyncWeatherForecastTask task = new AsyncWeatherForecastTask(this);
+        task.execute(weatherUrl);
     }
 
     private void renderWeatherList() {
@@ -93,60 +163,4 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
             imageResource = weatherStatusImageMap.get(currentWeather.getWeather().get(0).getDescription());
         }
         weatherImage.setImageResource(imageResource);    }
-
-    public void showForecastDetails(View view) {
-        fetchForecastData();
-    }
-
-    private void fetchForecastData(){
-        String weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + currentWeather.getName() + "&units=metric" + "&" + "APPID=" + "ebbc66b823072502c81339f5b0b9b042";
-        AsyncWeatherForecastTask task = new AsyncWeatherForecastTask(this);
-        task.execute(weatherUrl);
-    }
-
-    @Override
-    public void weatherForecastReceived(String data) {
-        Intent intent = new Intent(this, WeatherForecastActivity.class);
-        intent.putExtra("weatherData", data);
-        intent.putExtra("city", currentWeather.getName());
-        startActivity(intent);
-    }
-
-    @Override
-    public void weatherForecastFailed() {
-        Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
-    }
-
-    private void launchSearchActivity() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivityForResult(intent, SEARCH_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SEARCH_CODE && resultCode == RESULT_OK) {
-            double latitude = data.getDoubleExtra("latitude", -1);
-            double longitude = data.getDoubleExtra("longitude", -1);
-            if (latitude != -1 && longitude != -1) {
-                fetchWeatherForLocation(latitude, longitude);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void fetchWeatherForLocation(double latitude, double longitude) {
-        AsyncCurrentWeatherTask task = new AsyncCurrentWeatherTask(this);
-        task.execute(latitude, longitude);
-    }
-
-    @Override
-    public void onCurrentWeatherFetched(Weather weather) {
-        currentWeather = weather;
-        renderWeatherList();
-    }
-
-    @Override
-    public void onCurrentWeatherFetchFailure() {
-        Toast.makeText(MainActivity.this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
-    }
 }
