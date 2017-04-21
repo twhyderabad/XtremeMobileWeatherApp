@@ -2,17 +2,15 @@ package com.twevent.xtrememobileweatherapp;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.twevent.xtrememobileweatherapp.model.Weather;
-import com.twevent.xtrememobileweatherapp.model.WeatherForecast;
-import com.twevent.xtrememobileweatherapp.model.WeatherForecastResponse;
 import com.twevent.xtrememobileweatherapp.presenter.WeatherPresenter;
 import com.twevent.xtrememobileweatherapp.tasks.AsyncWeatherForecastTask;
 
@@ -27,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements  WeatherResponseL
 
     private Weather currentWeather = null;
     private Map<String, Integer> weatherStatusImageMap = new HashMap<>();
-    private WeatherForecastResponse weatherForecast = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +77,6 @@ public class MainActivity extends AppCompatActivity implements  WeatherResponseL
         fetchForecastData();
     }
 
-    private void readForecastDataFromFile(){
-        AssetManager assetManager = getAssets();
-        try {
-            InputStream inputStream = assetManager.open("city_forecast.json");
-            Gson gson = new Gson();
-            Reader inputReader = new InputStreamReader(inputStream);
-            weatherForecast = gson.fromJson(inputReader, WeatherForecastResponse.class);
-            renderWeather();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void fetchForecastData(){
         String weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + currentWeather.getName() + "&units=metric" + "&" + "APPID=" + "ebbc66b823072502c81339f5b0b9b042";
         AsyncWeatherForecastTask task = new AsyncWeatherForecastTask(this);
@@ -108,6 +92,6 @@ public class MainActivity extends AppCompatActivity implements  WeatherResponseL
 
     @Override
     public void weatherForecastFailed() {
-
+        Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
     }
 }

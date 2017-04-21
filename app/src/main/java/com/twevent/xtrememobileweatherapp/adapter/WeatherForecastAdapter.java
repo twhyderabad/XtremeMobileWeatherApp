@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.twevent.xtrememobileweatherapp.R;
 import com.twevent.xtrememobileweatherapp.model.WeatherForecast;
 import com.twevent.xtrememobileweatherapp.presenter.WeatherForecastPresenter;
@@ -24,7 +23,6 @@ public class WeatherForecastAdapter extends BaseAdapter {
     private Map<String, Integer> weatherIconsList = new HashMap<>();
 
     public WeatherForecastAdapter(Context context, List<WeatherForecast> weatherList) {
-        this.context = context;
         inflater = LayoutInflater.from(context);
         this.weatherList = weatherList;
     }
@@ -64,7 +62,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
     }
 
     private void updateView(View view, int position) {
-        constructweatherIconMap(weatherList.get(position).getWeather().getDescription());
+        constructWeatherIconMap(weatherList.get(position).getWeather().getDescription());
         WeatherForecastAdapter.ViewHolder viewHolder = (WeatherForecastAdapter.ViewHolder) view.getTag();
         WeatherForecast weather = weatherList.get(position);
         WeatherForecastPresenter presenter = new WeatherForecastPresenter(weather);
@@ -76,15 +74,14 @@ public class WeatherForecastAdapter extends BaseAdapter {
     }
 
     private int getWeatherIcon(String weatherStatus) {
-        int weatherIconId = 0;
-        weatherIconId = weatherIconsList.get(weatherStatus);
+        int weatherIconId = weatherIconsList.get(weatherStatus);
         if(weatherIconsList.get(weatherStatus) == null){
             weatherIconId = weatherIconsList.get("sky is clear");
         }
         return weatherIconId;
     }
 
-    private void constructweatherIconMap(String weatherStatus) {
+    private void constructWeatherIconMap(String weatherStatus) {
         switch (weatherStatus) {
             case "light rain": weatherIconsList.put("light rain",R.drawable.rain); break;
             case "moderate rain": weatherIconsList.put("moderate rain",R.drawable.sun);break;
@@ -100,7 +97,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
         viewHolder.day = (TextView) view.findViewById(R.id.day);
         viewHolder.temperature_min = (TextView) view.findViewById(R.id.temperature_min);
         viewHolder.up_arrow = (TextView) view.findViewById(R.id.temperature_max_arrow);
-        viewHolder.weatherImg = (ImageView) view.findViewById(R.id.weatherimg);
+        viewHolder.weatherImg = (ImageView) view.findViewById(R.id.weather_img);
         view.setTag(viewHolder);
         return view;
     }
