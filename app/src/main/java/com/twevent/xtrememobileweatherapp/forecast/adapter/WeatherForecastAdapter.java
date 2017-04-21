@@ -1,4 +1,4 @@
-package com.twevent.xtrememobileweatherapp.adapter;
+package com.twevent.xtrememobileweatherapp.forecast.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.twevent.xtrememobileweatherapp.R;
-import com.twevent.xtrememobileweatherapp.model.WeatherForecast;
-import com.twevent.xtrememobileweatherapp.presenter.WeatherForecastPresenter;
+import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastPresenter;
+import com.twevent.xtrememobileweatherapp.forecast.model.WeatherForecast;
 
 import java.util.HashMap;
 import java.util.List;
