@@ -1,15 +1,13 @@
 package com.twevent.xtrememobileweatherapp.tasks;
 
 import android.os.AsyncTask;
-
 import com.twevent.xtrememobileweatherapp.WeatherResponseListener;
-
-import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import java.io.IOException;
 
 
 public class AsyncWeatherForecastTask extends AsyncTask<String, Void, String> {
@@ -23,12 +21,12 @@ public class AsyncWeatherForecastTask extends AsyncTask<String, Void, String> {
 	}
 
 	@Override
-	protected void onPostExecute(String o) {
-		super.onPostExecute(o);
-		if(FAILED_EVENT.equals(o)) {
+	protected void onPostExecute(String result) {
+		super.onPostExecute(result);
+		if(FAILED_EVENT.equals(result)) {
 			listener.weatherForecastFailed();
 		} else {
-			listener.weatherForecastReceived(o);
+			listener.weatherForecastReceived(result);
 		}
 	}
 

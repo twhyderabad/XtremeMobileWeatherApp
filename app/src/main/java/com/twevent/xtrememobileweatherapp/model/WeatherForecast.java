@@ -33,7 +33,7 @@ public class WeatherForecast {
         private float min;
         private float max;
 
-        public float getMinimun() {
+        public float getMinimum() {
             return min;
         }
 

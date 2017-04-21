@@ -20,7 +20,7 @@ public class WeatherForecastPresenter {
     }
 
     public String getTemperatureMinInCelsius() {
-        return String.valueOf(weather.getTemperature().getMinimun()) + "\u00b0" + "C";
+        return String.valueOf(weather.getTemperature().getMinimum()) + "\u00b0" + "C";
     }
 
     public String getTemperatureMaxInCelsius() {
