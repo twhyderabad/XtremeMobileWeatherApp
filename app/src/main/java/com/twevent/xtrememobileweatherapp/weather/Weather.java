@@ -1,5 +1,7 @@
 package com.twevent.xtrememobileweatherapp.weather;
 
+import com.twevent.xtrememobileweatherapp.search.SearchResult;
+
 import java.util.List;
 
 public class Weather {
@@ -10,6 +12,7 @@ public class Weather {
     private Temperature main;
     private Wind wind;
     private Sys sys;
+    private SearchResult.LatLng coord;
 
     private String dt;
 
@@ -39,6 +42,10 @@ public class Weather {
 
     public Sys getSys() {
         return sys;
+    }
+
+    public SearchResult.LatLng getCoord() {
+        return coord;
     }
 
 
