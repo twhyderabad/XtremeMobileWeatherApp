@@ -9,7 +9,7 @@
         android:name="android.support.PARENT_ACTIVITY"
         tools:context="com.twevent.xtrememobileweatherapp.activity.DetailWeatherActivity"
         android:background="@drawable/gradient"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/NoActionBarTheme">
 
     <include
             android:id="@+id/toolbar11"

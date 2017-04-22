@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/activity_detailweather"
                 android:name="android.support.PARENT_ACTIVITY"
                 android:layout_width="match_parent"
@@ -10,7 +9,7 @@
                 android:theme="@style/NoActionBarTheme">
 
   <include
-    android:id="@+id/toolbar11"
+    android:id="@+id/toolbar"
     layout="@layout/custom_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
@@ -19,7 +18,7 @@
     android:id="@+id/favouritesListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/toolbar11"
+    android:layout_below="@+id/toolbar"
     android:layout_marginTop="5dp" />
 
 </RelativeLayout>

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.twevent.xtrememobileweatherapp.favourite.DatabaseTableColumnNames.COLUMN_NAME_CITY;
 import static com.twevent.xtrememobileweatherapp.favourite.DatabaseTableColumnNames.COLUMN_NAME_LATITUDE;
 import static com.twevent.xtrememobileweatherapp.favourite.DatabaseTableColumnNames.COLUMN_NAME_LONGITUDE;
@@ -24,7 +27,7 @@ public class FavouritesRepository {
 		weatherAppDatabaseHandler = WeatherAppDatabaseHandler.getInstance(context);
 	}
 
-	public boolean saveFavourite(String name, double latitude, double longitude) {
+	boolean saveFavourite(String name, double latitude, double longitude) {
 		if(favouriteAlreadyExists(latitude, longitude)) {
 			return true;
 		}
@@ -40,6 +43,32 @@ public class FavouritesRepository {
 			Log.e(TAG, exception.getLocalizedMessage());
 		}
 		return  false;
+	}
+
+	List<FavouriteModel> getFavourites() {
+		List<FavouriteModel> favouritesList = new ArrayList<>();
+		try (SQLiteDatabase sqLiteDatabase = weatherAppDatabaseHandler.getReadableDatabase()) {
+			try (Cursor cursor = sqLiteDatabase.query(TABLE_NAME_FAVOURITE, null, null, null, null, null, null)) {
+				if (cursor == null) {
+					return favouritesList;
+				}
+				while (cursor.moveToNext()) {
+					String cityName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_CITY));
+					double latitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_NAME_LATITUDE));
+					double longitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_NAME_LONGITUDE));
+
+					FavouriteModel favouriteModel = new FavouriteModel();
+					favouriteModel.setCityName(cityName);
+					favouriteModel.setLatitude(latitude);
+					favouriteModel.setLongitude(longitude);
+					favouritesList.add(favouriteModel);
+				}
+				cursor.close();
+			}
+		} catch (SQLiteException exception) {
+			Log.e(TAG, exception.getLocalizedMessage());
+		}
+		return favouritesList;
 	}
 
 	private boolean favouriteAlreadyExists(double latitude, double longitude) {

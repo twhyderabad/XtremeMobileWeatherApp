@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/gradient"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:theme="@style/NoActionBarTheme">
 
     <RelativeLayout
         android:id="@+id/searchLayout"
