@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
+import com.twevent.xtrememobileweatherapp.favourite.FavouriteSavedCallback;
+import com.twevent.xtrememobileweatherapp.favourite.FavouritesRepository;
+import com.twevent.xtrememobileweatherapp.favourite.SaveFavouriteTask;
 import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastActivity;
 import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastResponseListener;
 import com.twevent.xtrememobileweatherapp.forecast.tasks.AsyncWeatherForecastTask;
@@ -30,7 +33,7 @@ import java.util.Map;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-public class MainActivity extends AppCompatActivity implements WeatherForecastResponseListener, CurrentWeatherResponseListener {
+public class MainActivity extends AppCompatActivity implements WeatherForecastResponseListener, CurrentWeatherResponseListener, FavouriteSavedCallback {
 
     private static final int SEARCH_CODE = 9999;
     private Weather currentWeather = null;
@@ -69,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
 		sharedPreferences = getSharedPreferences("com.twevent.xtrememobileweatherapp.weatherApp", 0);
 
         favouriteListButton = (ImageView) findViewById(R.id.view_favourite_list);
+        favouriteListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         showFavouriteListButton();
 
         TextView saveAsFavouriteButton = (TextView) findViewById(R.id.add_as_favourite);
@@ -141,6 +150,12 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
 
     private void saveFavourite() {
         sharedPreferences.edit().putBoolean("favouriteSaved", true).apply();
+        saveTheCityAsFavourite();
+    }
+
+    private void saveTheCityAsFavourite() {
+        FavouritesRepository favouritesRepository = new FavouritesRepository(this);
+        new SaveFavouriteTask(favouritesRepository, this, currentWeather).execute();
     }
 
     private void fetchWeatherForLocation(double latitude, double longitude) {
@@ -179,4 +194,15 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
             imageResource = weatherStatusImageMap.get(currentWeather.getWeather().get(0).getDescription());
         }
         weatherImage.setImageResource(imageResource);    }
+
+    @Override
+    public void displayToast(String toastMessage) {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showSaveAsFavouriteButton(int visibility) {
+        TextView addToFavourites = (TextView) findViewById(R.id.add_as_favourite);
+        addToFavourites.setVisibility(visibility);
+    }
 }
