@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class WeatherForecastAdapter extends BaseAdapter {
 
-    private Context context;
     private LayoutInflater inflater;
     private List<WeatherForecast> weatherList;
     private Map<String, Integer> weatherIconsList = new HashMap<>();
@@ -26,7 +25,6 @@ public class WeatherForecastAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
         this.weatherList = weatherList;
     }
-
 
     @Override
     public int getCount() {

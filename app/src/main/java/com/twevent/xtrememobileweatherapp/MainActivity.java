@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.twevent.xtrememobileweatherapp.favourite.FavouriteSavedCallback;
+import com.twevent.xtrememobileweatherapp.favourite.FavouritesListActivity;
 import com.twevent.xtrememobileweatherapp.favourite.FavouritesRepository;
 import com.twevent.xtrememobileweatherapp.favourite.SaveFavouriteTask;
 import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastActivity;
@@ -30,12 +31,14 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity implements WeatherForecastResponseListener, CurrentWeatherResponseListener, FavouriteSavedCallback {
 
     private static final int SEARCH_CODE = 9999;
+    private static final int FAVOURITES_CODE = 9998;
     private Weather currentWeather = null;
     private static final Map<String, Integer> weatherStatusImageMap;
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
 
 	private SharedPreferences sharedPreferences;
     private ImageView favouriteListButton;
+    private TextView saveAsFavouriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +76,16 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
 		sharedPreferences = getSharedPreferences("com.twevent.xtrememobileweatherapp.weatherApp", 0);
 
         favouriteListButton = (ImageView) findViewById(R.id.view_favourite_list);
+        showFavouriteListButton();
         favouriteListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this, FavouritesListActivity.class);
+                startActivityForResult(intent, FAVOURITES_CODE);
             }
         });
-        showFavouriteListButton();
 
-        TextView saveAsFavouriteButton = (TextView) findViewById(R.id.add_as_favourite);
+        saveAsFavouriteButton = (TextView) findViewById(R.id.add_as_favourite);
         saveAsFavouriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +132,12 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SEARCH_CODE && resultCode == RESULT_OK) {
+        if(requestCode == FAVOURITES_CODE) {
+            showSaveAsFavouriteButton(GONE);
+        } else {
+            showSaveAsFavouriteButton(VISIBLE);
+        }
+        if ((requestCode == SEARCH_CODE || requestCode == FAVOURITES_CODE) && resultCode == RESULT_OK) {
             double latitude = data.getDoubleExtra("latitude", -1);
             double longitude = data.getDoubleExtra("longitude", -1);
             if (latitude != -1 && longitude != -1) {
@@ -202,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
 
     @Override
     public void showSaveAsFavouriteButton(int visibility) {
-        TextView addToFavourites = (TextView) findViewById(R.id.add_as_favourite);
-        addToFavourites.setVisibility(visibility);
+        saveAsFavouriteButton.setVisibility(visibility);
     }
 }

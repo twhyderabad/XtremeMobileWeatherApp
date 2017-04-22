@@ -9,7 +9,7 @@
                 android:theme="@style/NoActionBarTheme">
 
   <include
-    android:id="@+id/toolbar11"
+    android:id="@+id/toolbar"
     layout="@layout/custom_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
@@ -18,7 +18,7 @@
     android:id="@+id/favouritesListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/toolbar11"
+    android:layout_below="@+id/toolbar"
     android:layout_marginTop="5dp" />
 
 </RelativeLayout>

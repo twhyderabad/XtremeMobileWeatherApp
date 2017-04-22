@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
 import static com.twevent.xtrememobileweatherapp.favourite.DatabaseTableColumnNames.COLUMN_NAME_CITY;
 import static com.twevent.xtrememobileweatherapp.favourite.DatabaseTableColumnNames.COLUMN_NAME_ID;
 import static com.twevent.xtrememobileweatherapp.favourite.DatabaseTableColumnNames.COLUMN_NAME_LATITUDE;
@@ -47,10 +46,5 @@ public class WeatherAppDatabaseHandler extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-	}
-
-	@Override
-	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		super.onDowngrade(db, oldVersion, newVersion);
 	}
 }
