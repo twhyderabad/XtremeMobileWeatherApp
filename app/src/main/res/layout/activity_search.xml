@@ -4,6 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/gradient"
+                android:padding="10dp"
                 android:theme="@style/NoActionBarTheme">
 
     <RelativeLayout
@@ -35,7 +36,7 @@
             android:contentDescription="@string/click_to_search"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
-            android:src="@android:drawable/ic_menu_search" />
+            android:src="@drawable/search_icon" />
 
     </RelativeLayout>
 
