@@ -2,8 +2,10 @@ package com.twevent.xtrememobileweatherapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.twevent.xtrememobileweatherapp.favourite.SaveFavouriteTask;
 import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastActivity;
 import com.twevent.xtrememobileweatherapp.forecast.WeatherForecastResponseListener;
 import com.twevent.xtrememobileweatherapp.forecast.tasks.AsyncWeatherForecastTask;
+import com.twevent.xtrememobileweatherapp.location.LocationTracker;
 import com.twevent.xtrememobileweatherapp.search.SearchActivity;
 import com.twevent.xtrememobileweatherapp.weather.AsyncCurrentWeatherTask;
 import com.twevent.xtrememobileweatherapp.weather.CurrentWeatherResponseListener;
@@ -41,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
     private static final int FAVOURITES_CODE = 9998;
     private Weather currentWeather = null;
     private static final Map<String, Integer> weatherStatusImageMap;
+    private LocationTracker locationTracker;
+    private static final double defaultLat = 17.3850f;
+    private static final double defaultLong = 78.4867f;
+    private static double lat = defaultLat;
+    private static double lon = defaultLong;
 
     static {
         weatherStatusImageMap = new HashMap<>();
@@ -93,6 +101,24 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
                 showFavouriteListButton();
             }
         });
+        locationTracker = new LocationTracker(this);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if(lat == defaultLat && lon == defaultLong) {
+            locationTracker.refreshLocation();
+        }else {
+            showWeatherOfCurrentCity();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 200 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
+            locationTracker.refreshLocation();
     }
 
     private void showFavouriteListButton() {
@@ -138,11 +164,8 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
             showSaveAsFavouriteButton(VISIBLE);
         }
         if ((requestCode == SEARCH_CODE || requestCode == FAVOURITES_CODE) && resultCode == RESULT_OK) {
-            double latitude = data.getDoubleExtra("latitude", -1);
-            double longitude = data.getDoubleExtra("longitude", -1);
-            if (latitude != -1 && longitude != -1) {
-                fetchWeatherForLocation(latitude, longitude);
-            }
+            lat = data.getDoubleExtra("latitude", lat);
+            lon = data.getDoubleExtra("longitude", lon);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -182,6 +205,15 @@ public class MainActivity extends AppCompatActivity implements WeatherForecastRe
         String weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + currentWeather.getName() + "&units=metric" + "&" + "APPID=" + "ebbc66b823072502c81339f5b0b9b042";
         AsyncWeatherForecastTask task = new AsyncWeatherForecastTask(this);
         task.execute(weatherUrl);
+    }
+
+    private void showWeatherOfCurrentCity() {
+        fetchWeatherForLocation(lat, lon);
+    }
+
+    public void renderWeatherList(Weather weather) {
+        this.currentWeather = weather;
+        renderWeatherList();
     }
 
     private void renderWeatherList() {

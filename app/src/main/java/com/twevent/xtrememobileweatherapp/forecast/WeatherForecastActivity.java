@@ -20,11 +20,11 @@ public class WeatherForecastActivity extends AppCompatActivity {
         weatherData = getIntent().getStringExtra("weatherData");
         String city = getIntent().getStringExtra("city");
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
-        toolbar.setTitle(city);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(city);
         }
         showDetailWeatherPage();
     }

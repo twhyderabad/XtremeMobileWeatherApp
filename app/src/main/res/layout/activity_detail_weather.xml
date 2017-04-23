@@ -12,7 +12,6 @@
         android:theme="@style/NoActionBarTheme">
 
     <include
-            android:id="@+id/toolbar11"
             layout="@layout/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -27,7 +26,7 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:paddingBottom="@dimen/activity_vertical_margin"
-            android:layout_below="@+id/toolbar11"
+            android:layout_below="@+id/custom_toolbar"
     />
 
 </RelativeLayout>
