@@ -25,10 +25,20 @@
     android:layout_toStartOf="@id/searchImageView"
     android:src="@drawable/favourites"
     android:paddingTop="10dp"
-    android:paddingEnd="10dp"
-    android:paddingStart="10dp"
+    android:paddingEnd="5dp"
     android:layout_alignBaseline="@id/searchImageView"
     android:contentDescription="@string/view_favourite_list"/>
+
+  <ImageView
+      android:id="@+id/home"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toStartOf="@id/view_favourite_list"
+      android:src="@drawable/home_icon"
+      android:paddingTop="10dp"
+      android:paddingEnd="5dp"
+      android:layout_alignBaseline="@id/searchImageView"
+      android:contentDescription="@string/view_favourite_list"/>
 
   <TextView
     android:id="@+id/cityName"
